@@ -12,14 +12,14 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './config/.env' });
 
 import {  printSchema } from "graphql";
-import { gql, createModule, Module } from 'graphql-modules';
+import { createApplication, gql, createModule, Module } from 'graphql-modules';
 // import { kRoot } from './src/k-root.TG.typedefs';
 
 // import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
 // import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
 
-import {  gSheetModelModule } from '@autograph.run/model.google.sheets'
-import { createApplication } from 'graphql-modules';
+import { gSheetModelModule} from '@autograph.run/model.google.sheets';
+
 var root = {
   OYwhoDat: () =>  "Oy. It's me!"
   
@@ -41,8 +41,9 @@ const testStubModule = createModule({
   ],
 });
 
+const aMod: any = gSheetModelModule;
 const application=   createApplication({
-    modules: [testStubModule, gSheetModelModule],
+    modules: [gSheetModelModule, testStubModule],
   });
 
   const customExecuteFn = application.createExecution();

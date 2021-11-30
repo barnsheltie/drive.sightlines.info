@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/barnsheltie/drive.sightlines.info#readme",
   "devDependencies": {
-    "@tsconfig/node14": "^1.0.1",
     "@tsconfig/node16": "^1.0.1",
     "@types/cors": "^2.8.12",
     "@types/debug": "^4.1.7",
@@ -42,12 +41,10 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "@autograph.run/model.google.sheets": "^0.0.30",
+    "@autograph.run/model.google.sheets" : "^0.0.35",
     "@google-cloud/datastore": "^6.5.0",
-    "@google-cloud/functions-framework": "^1.9.0",
     "@types/js-yaml": "^4.0.4",
     "@types/serve-favicon": "^2.5.3",
-    "@urql/core": "^2.3.5",
     "class-validator": "^0.13.2",
     "cors": "^2.8.5",
     "debug": "^4.3.2",
@@ -66,7 +63,6 @@
     "require-yml": "^2.0.0",
     "serve-favicon": "^2.5.0",
     "type-graphql": "^1.2.0-rc.1",
-    "urql": "^2.0.5",
     "uuid": "^8.3.2",
     "uuid-random": "^1.3.2",
     "winston": "^3.3.3"

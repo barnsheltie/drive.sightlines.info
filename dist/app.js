@@ -18,7 +18,6 @@ const graphql_modules_1 = require("graphql-modules");
 // import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
 // import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
 const model_google_sheets_1 = require("@autograph.run/model.google.sheets");
-const graphql_modules_2 = require("graphql-modules");
 var root = {
     OYwhoDat: () => "Oy. It's me!"
 };
@@ -36,8 +35,9 @@ const testStubModule = (0, graphql_modules_1.createModule)({
         }
     ],
 });
-const application = (0, graphql_modules_2.createApplication)({
-    modules: [testStubModule, model_google_sheets_1.gSheetModelModule],
+const aMod = model_google_sheets_1.gSheetModelModule;
+const application = (0, graphql_modules_1.createApplication)({
+    modules: [model_google_sheets_1.gSheetModelModule, testStubModule],
 });
 const customExecuteFn = application.createExecution();
 const schema = application.schema;
