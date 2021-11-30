@@ -8,17 +8,16 @@ process.env.AppVersion  = pack.version;
 process.env.description = pack.description;
 process.env.name        = pack.name;
 
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 dotenv.config({ path: './config/.env' });
 
-import {  printSchema } from "graphql";
-import { createApplication, gql, createModule, Module } from 'graphql-modules';
+import { createApplication, gql, createModule, Module } from 'graphql-modules'
 // import { kRoot } from './src/k-root.TG.typedefs';
 
 // import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
 // import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
 
-import { gSheetModelModule} from '@autograph.run/model.google.sheets';
+import { gSheetModelModule} from '@autograph.run/model.google.sheets'
 
 var root = {
   OYwhoDat: () =>  "Oy. It's me!"
