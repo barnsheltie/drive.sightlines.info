@@ -1,20 +1,8 @@
-{
-    "extends": "@tsconfig/node16/tsconfig.json",
-    
+
+  {
+    "extends": "./tsconfig.build.json",
+    "include": [ "*.ts"],
     "compilerOptions": {
-      "target": "es6",
-      "declaration": true,
-      "sourceMap": true,                             /* Specify what module code is generated. */                  /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */                  /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
-      "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */                        /* Enable all strict type-checking options. */
-      "outDir": "dist",
-      /* Tentative */
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "esModuleInterop": true,
-     // "module": "commonjs",
-      "noImplicitAny": true,
-      "strictFunctionTypes" : false,
-      "moduleResolution": "node"
+      "baseUrl": "./",
     }
   }
-  

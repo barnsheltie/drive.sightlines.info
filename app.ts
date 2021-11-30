@@ -18,7 +18,7 @@ import { gql, createModule, Module } from 'graphql-modules';
 // import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
 // import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
 
-import { gSheetModelModule } from '@autograph.run/model.google.sheets'
+import {  gSheetModelModule } from '@autograph.run/model.google.sheets'
 import { createApplication } from 'graphql-modules';
 var root = {
   OYwhoDat: () =>  "Oy. It's me!"
