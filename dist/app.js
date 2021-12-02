@@ -35,7 +35,6 @@ const testStubModule = (0, graphql_modules_1.createModule)({
         }
     ],
 });
-const aMod = model_google_sheets_1.gSheetModelModule;
 const application = (0, graphql_modules_1.createApplication)({
     modules: [model_google_sheets_1.gSheetModelModule, testStubModule],
 });
