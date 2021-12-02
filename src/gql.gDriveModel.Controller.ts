@@ -20,10 +20,8 @@ export const gDriveModelControllerTypeDefs = gql`
 
   extend type Query {
    
-    whoDis: JSON,
+    whoDatMe: JSON,
     showControllerID: String,
-    getSample_fromLedgerQ: JSON,
-    getQstats: JSON,
 
   },
   
@@ -46,7 +44,7 @@ export const gDriveModelControllerResolvers = {
   JSONObject: GraphQLJSONObject,
   
   Query: {
-    whoDat: (root: JSON) : JSON => { return root },
+    whoDatMe: (root: JSON) : JSON => { return root },
     /**
      * 
      * @param _ 

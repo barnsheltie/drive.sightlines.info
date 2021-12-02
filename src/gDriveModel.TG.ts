@@ -139,15 +139,11 @@ export class  GoogleDrive extends _gDriveStatusClass {
   @Field(type =>  GoogleDriveProperty)
   properties!:    GoogleDriveProperty
 
-  @Field(type => String)
-  spreadsheetId!:   String
-
-  @Field(type => String)
-  spreadsheetUrl!: String 
 
   constructor(id: String) {
     super();
-    this.spreadsheetId = id;
+    debugLog(`Initializing - GoogleDrive`)
+
   }
 
 }
@@ -167,10 +163,6 @@ export class gDriveModelResolverClass {
     return this.#mySheetsKey
   } 
   
-  @Query(returns => googleUserID, { nullable: true })
-  whoDis () : googleUserID {  
-    return this.#owner;
-  }
 
   @Query(returns => String)
   owner () : string {
