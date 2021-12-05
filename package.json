@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@autograph.run/model.google.drive": "^0.0.4",
-
     "@google-cloud/datastore": "^6.5.0",
     "@types/js-yaml": "^4.0.4",
     "@types/serve-favicon": "^2.5.3",
