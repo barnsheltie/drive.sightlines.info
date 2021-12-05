@@ -1,6 +1,6 @@
 {
   "name": "drive.sightlines.info",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@autograph.run/model.google.sheets": "^0.0.36",
-    "@autograph.run/provider.google.auth": "^0.0.55",
+    "@autograph.run/provider.google.auth": "^0.0.58",
     "@google-cloud/datastore": "^6.5.0",
     "@google-cloud/functions-framework": "^1.9.0",
     "@types/js-yaml": "^4.0.4",
