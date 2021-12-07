@@ -1,14 +1,15 @@
 /**
  *
  */
+import { gDriveMimeEnums } from '@autograph.run/model.google.drive';
 export declare const dataStoreEntity: {
     user: string;
     mimetype: {
-        doc: string;
-        file: string;
-        folder: string;
+        doc: gDriveMimeEnums;
+        file: gDriveMimeEnums;
+        folder: gDriveMimeEnums;
         photo: string;
-        shredderShard: string;
+        shredderShard: gDriveMimeEnums;
         sheet: string;
     };
     rgb: {

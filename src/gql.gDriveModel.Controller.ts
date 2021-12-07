@@ -12,8 +12,6 @@ import { createApplication , createModule, InjectionToken } from 'graphql-module
 import "reflect-metadata";
 import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json'
 
-
-
 export const gDriveModelControllerTypeDefs = gql`
   scalar JSON
   scalar JSONObject

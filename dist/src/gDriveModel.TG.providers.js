@@ -37,14 +37,15 @@ const debug_1 = __importDefault(require("debug"));
 const debugLog = process.env.NODE_ENV === 'debug' ? (0, debug_1.default)('gSheetModel.provider') : (0, debug_1.default)('');
 const { google } = require('googleapis');
 const { Datastore } = require('@google-cloud/datastore');
+const model_google_drive_1 = require("@autograph.run/model.google.drive");
 exports.dataStoreEntity = {
     user: 'Users',
     mimetype: {
-        doc: 'application/vnd.google-apps.document',
-        file: 'application/vnd.google-apps.file',
-        folder: 'application/vnd.google-apps.folder',
+        doc: model_google_drive_1.gDriveMimeEnums.doc,
+        file: model_google_drive_1.gDriveMimeEnums.file,
+        folder: model_google_drive_1.gDriveMimeEnums.folder,
         photo: 'application/vnd.google-apps.photo',
-        shredderShard: 'application/gzip',
+        shredderShard: model_google_drive_1.gDriveMimeEnums.shredderShard,
         sheet: 'application/vnd.google-apps.spreadsheet',
     },
     rgb: {

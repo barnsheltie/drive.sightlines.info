@@ -18,16 +18,17 @@ const debugLog: debug.IDebugger = process.env.NODE_ENV === 'debug' ? debug('gShe
 
 const { google }    = require('googleapis');
 const { Datastore}  = require('@google-cloud/datastore');
-
+import {gDriveMimeEnums } from '@autograph.run/model.google.drive'
 
 export const dataStoreEntity = {
    user : 'Users',
    mimetype : { // -- https://developers.google.com/drive/api/v3/mime-types
-    doc             : 'application/vnd.google-apps.document',
-    file            : 'application/vnd.google-apps.file',
-    folder          : 'application/vnd.google-apps.folder',
+  
+    doc             : gDriveMimeEnums.doc,  // 'application/vnd.google-apps.document', 
+    file            : gDriveMimeEnums.file,   // 'application/vnd.google-apps.file',
+    folder          : gDriveMimeEnums.folder,    // 'application/vnd.google-apps.folder',
     photo           : 'application/vnd.google-apps.photo',
-    shredderShard   : 'application/gzip',
+    shredderShard   : gDriveMimeEnums.shredderShard, //'application/gzip',
     sheet           : 'application/vnd.google-apps.spreadsheet',
   }, 
   rgb : {
