@@ -1,5 +1,5 @@
 ts*.json
-*.ts
 dist/
 node-modules/
 src/
+*.ts
