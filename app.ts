@@ -17,8 +17,9 @@ import { createApplication, gql, createModule, Module } from 'graphql-modules'
 // import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
 // import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
 
-import { gSheetModelModule} from '@autograph.run/model.google.sheets'
-import { gDriveModule } from './src/gDriveModel.TG'
+// import { gSheetModelModule} from '@autograph.run/model.google.sheets'
+import { googleDriveModelModule } from '@autograph.run/model.google.drive'
+import { googleAuthProviderModule } from '@autograph.run/provider.google.auth'
 
 
 var root = {
@@ -43,7 +44,7 @@ const testStubModule = createModule({
 });
 
 const application=   createApplication({
-    modules: [gSheetModelModule, testStubModule, gDriveModule ],
+    modules: [testStubModule, googleAuthProviderModule, googleDriveModelModule ],
   });
 
   const customExecuteFn = application.createExecution();
