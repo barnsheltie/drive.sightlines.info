@@ -5,23 +5,24 @@
 import  neo4j, { Driver, Session } from 'neo4j-driver'
 
 /**
- *     const uri = 'neo4j+s://14af9728.databases.neo4j.io';
-    const user = '<Username for Neo4j Aura database>';
-    const password = '<Password for Neo4j Aura database>';
 NEO4J_URL= 'neo4j+s://14af9728.databases.neo4j.io'
 NEO4J_USER='neo4j'
 NEO4J_PASSWORD="ZMxpWkVvBWaExErcyFToDwXs3ljadgVB35PGODX3esw"
+*/
 
-
+/**
+ * 
  */
-
 export class ne04jClass {
   driver: Driver ;
   session: Session;
-  sig:  string = 'ThisIsNeo4jSig';
+  sig:  string;
 
-
-  constructor () {
+  /**
+   * 
+   */
+  constructor (sig: string = 'ThisIsNeo4jSig') {
+    this.sig = sig;
     this.driver = neo4j.driver(<string>process.env.NEO4J_URL, neo4j.auth.basic(<string> process.env.NEO4J_USER, <string> process.env.NEO4J_PASSWORD))
     this.session = this.driver.session();
   }
