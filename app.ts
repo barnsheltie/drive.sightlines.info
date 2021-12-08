@@ -20,6 +20,7 @@ import { createApplication, gql, createModule, Module } from 'graphql-modules'
 // import { gSheetModelModule} from '@autograph.run/model.google.sheets'
 import { googleDriveModelModule } from '@autograph.run/model.google.drive'
 import { googleAuthProviderModule } from '@autograph.run/provider.google.auth'
+import { neo4jAuraProviderService } from './src/driveSightlines.Model.Controller'
 
 
 var root = {
@@ -30,14 +31,26 @@ var root = {
 const testStubModule = createModule({
   id: '.testStub.module',
   dirname: __dirname,
-  typeDefs: [ gql` extend type Query { 
+  typeDefs: [ gql` 
+    extend type Query { 
       testRoot: String 
-      }` ],
+      },
+    extend type Mutation {
+      addNode( name: String): String
+    }
+      
+    ` ],
   resolvers: [ 
     {
       Query: {
         testRoot: ()=> `From the Stub. This is NOT part of the K-Root module`
-      }
+      },
+      Mutation: {
+        addNode: (_: any, {name}: any, {injector}: any) : string  => {
+          return injector.get(neo4jAuraProviderService).addFolder(name);
+        }
+
+      },
     }
   
   ],
@@ -45,6 +58,7 @@ const testStubModule = createModule({
 
 const application=   createApplication({
     modules: [testStubModule, googleAuthProviderModule, googleDriveModelModule ],
+    providers: [neo4jAuraProviderService]
   });
 
   const customExecuteFn = application.createExecution();

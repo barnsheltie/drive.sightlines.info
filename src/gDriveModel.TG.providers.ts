@@ -5,14 +5,6 @@
 import { Injectable } from 'graphql-modules';
 
 
-const pack = require('../package.json');
-process.env.AppVersion  = pack.version;
-process.env.description = pack.description;
-process.env.name        = pack.name;
-
-import dotenv from 'dotenv';
-dotenv.config({ path: './config/.env' });
-
 import debug from 'debug';
 const debugLog: debug.IDebugger = process.env.NODE_ENV === 'debug' ? debug('gSheetModel.provider') : debug('');
 

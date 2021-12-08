@@ -1,6 +1,6 @@
 {
   "name": "@autograph.run/drive.sightlines.info",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -61,6 +61,7 @@
     "graphql-type-json": "^0.3.2",
     "http-errors": "~1.8.0",
     "morgan": "~1.10.0",
+    "neo4j-driver": "^4.4.1",
     "reflect-metadata": "^0.1.13",
     "require-yml": "^2.0.0",
     "serve-favicon": "^2.5.0",

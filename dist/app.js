@@ -20,25 +20,38 @@ const graphql_modules_1 = require("graphql-modules");
 // import { gSheetModelModule} from '@autograph.run/model.google.sheets'
 const model_google_drive_1 = require("@autograph.run/model.google.drive");
 const provider_google_auth_1 = require("@autograph.run/provider.google.auth");
+const driveSightlines_Model_Controller_1 = require("./src/driveSightlines.Model.Controller");
 var root = {
     OYwhoDat: () => "Oy. It's me!"
 };
 const testStubModule = (0, graphql_modules_1.createModule)({
     id: '.testStub.module',
     dirname: __dirname,
-    typeDefs: [(0, graphql_modules_1.gql) ` extend type Query { 
+    typeDefs: [(0, graphql_modules_1.gql) ` 
+    extend type Query { 
       testRoot: String 
-      }`],
+      },
+    extend type Mutation {
+      addNode( name: String): String
+    }
+      
+    `],
     resolvers: [
         {
             Query: {
                 testRoot: () => `From the Stub. This is NOT part of the K-Root module`
-            }
+            },
+            Mutation: {
+                addNode: (_, { name }, { injector }) => {
+                    return injector.get(driveSightlines_Model_Controller_1.neo4jAuraProviderService).addFolder(name);
+                }
+            },
         }
     ],
 });
 const application = (0, graphql_modules_1.createApplication)({
     modules: [testStubModule, provider_google_auth_1.googleAuthProviderModule, model_google_drive_1.googleDriveModelModule],
+    providers: [driveSightlines_Model_Controller_1.neo4jAuraProviderService]
 });
 const customExecuteFn = application.createExecution();
 const schema = application.schema;
