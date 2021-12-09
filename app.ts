@@ -2,7 +2,7 @@ require ('graphql-import-node/register');
 import "reflect-metadata";
 
 
-const pack = require('../package.json');
+const pack = require('./package.json');
 process.env.AppVersion  = pack.version;
 process.env.description = pack.description;
 process.env.name        = pack.name;
@@ -20,7 +20,7 @@ import { printSchema } from "graphql";
 import { googleDriveModelModule } from '@autograph.run/model.google.drive'
 import { googleAuthProviderModule } from '@autograph.run/provider.google.auth'
 import { neo4jAuraProviderService, neo4jGraphProviderModule } from '@autograph.run/provider.neo4j.graph'
-import { driveSightlinesModelControllerTypeDefs, driveSightlinesModelControllerResolvers } from "src/driveSightlines.Model.Controller";
+import { driveSightlinesModelControllerTypeDefs, driveSightlinesModelControllerResolvers } from "./src/driveSightlines.Model.Controller";
 
 
 
@@ -48,7 +48,6 @@ const testStubModule = createModule({
       },
       Mutation: {
         addNode: (_: any, {name}: any, {injector}: any) : string  => {
-          const folders = injector.get()
           return injector.get(neo4jAuraProviderService).addFolder(name);
         }
 

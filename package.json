@@ -1,12 +1,12 @@
 {
   "name": "@autograph.run/drive.sightlines.info",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
-    "build": "tsc"
+    "build": "tsc && cp package.json dist/"
   },
   "publishConfig": {
     "@autograph.run:registry": "https://gitlab.com/api/v4/projects/31500273/packages/npm/"
@@ -44,9 +44,9 @@
   },
   "dependencies": {
     "@autograph.run/model.google.drive": "^0.0.18",
-    "@autograph.run/model.google.sheets": "^0.0.36",
+    "@autograph.run/model.google.sheets": "^0.0.37",
     "@autograph.run/provider.google.auth": "^0.0.69",
-    "@autograph.run/provider.neo4j.graph": "^0.0.4",
+    "@autograph.run/provider.neo4j.graph": "^0.0.13",
     "@google-cloud/datastore": "^6.5.0",
     "@types/js-yaml": "^4.0.4",
     "@types/serve-favicon": "^2.5.3",

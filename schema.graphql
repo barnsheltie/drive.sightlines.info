@@ -10,15 +10,19 @@ type Query {
   showControllerID: String
   listMyFolders(count: Int = 50): [String!]
   listMyFiles(count: Int = 50): [String!]
+  Neo4j_showModuleID: String
+  Neo4j_showSpikeIOsig: JSON
 }
 
 type Mutation {
   addNode(name: String): String
+  addMyFolders(count: Int = 50): [String!]
   stubMutation: String
   bindMe(id: String!): Int!
 
   """Activates polling of Ledger Q """
   initMe(go: Boolean = true, period: Int = 5): String!
+  testFolder(id: String): String
 }
 
 """

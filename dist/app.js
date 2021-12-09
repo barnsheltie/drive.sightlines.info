@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require('graphql-import-node/register');
 require("reflect-metadata");
-const pack = require('../package.json');
+const pack = require('./package.json');
 process.env.AppVersion = pack.version;
 process.env.description = pack.description;
 process.env.name = pack.name;
@@ -19,7 +19,7 @@ const graphql_1 = require("graphql");
 const model_google_drive_1 = require("@autograph.run/model.google.drive");
 const provider_google_auth_1 = require("@autograph.run/provider.google.auth");
 const provider_neo4j_graph_1 = require("@autograph.run/provider.neo4j.graph");
-const driveSightlines_Model_Controller_1 = require("src/driveSightlines.Model.Controller");
+const driveSightlines_Model_Controller_1 = require("./src/driveSightlines.Model.Controller");
 var root = {
     OYwhoDat: () => "Oy. It's me!"
 };
@@ -42,7 +42,6 @@ const testStubModule = (0, graphql_modules_1.createModule)({
             },
             Mutation: {
                 addNode: (_, { name }, { injector }) => {
-                    const folders = injector.get();
                     return injector.get(provider_neo4j_graph_1.neo4jAuraProviderService).addFolder(name);
                 }
             },

@@ -19,29 +19,30 @@ import { gDriveProviderService, gDriveMimeEnums, gDriveStateEnums, listQvals  } 
 import { neo4jAuraProviderService } from '@autograph.run/provider.neo4j.graph';
 
 export const driveSightlinesModelControllerTypeDefs = gql`
-  type Query {
-
-
+  type Mutation {
     addMyFolders(count: Int = 50): [String!],
   }
 `;
 
 export const driveSightlinesModelControllerResolvers = {
-  Query: {
+  Mutation: {
 
     addMyFolders: async ( _: any, { count } : any, { injector }: GraphQLModules.Context ):  Promise<Array<string>>=> {
 
       const auth =    injector.get(gAuthProviders).auth;  // Get auth
       const k =  await injector.get(gDriveProviderService).listDrive({ auth, count, q: listQvals.myfolders });  // Get folders from gDrive
-      const add2graph = injector.get(neo4jAuraProviderService).addFolder;
+      // const add2graph = injector.get(neo4jAuraProviderService).addFolder;
 
-      let proms = [];
+    //  let proms = [];
       try {
         for (const element of k)  {
-          proms.push( add2graph(element) );
+          // proms.push( add2graph(element) );\
+          await injector.get(neo4jAuraProviderService).addFolder(element);
           console.log(`... adding ${element}`)
         }
-        await Promise.allSettled(proms);
+
+      //  await Promise.all(proms);
+        console.log(`....... promises settled`)
         return k
   
       } catch(e: any) {
