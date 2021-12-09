@@ -6,33 +6,50 @@ import { Injectable } from 'graphql-modules';
 import debug from 'debug';
 const debugLog: debug.IDebugger = process.env.NODE_ENV === 'debug' ? debug('googleSight.neo4j.provider') : debug('');
 
-import { ne04jClass } from './helpers/ne04j.helper'
+import { ID, Arg, Field, Int, 
+  ObjectType, InterfaceType, registerEnumType,
+  Resolver, Query 
+} from 'type-graphql';
+import { MODULE_ID, gql } from "graphql-modules";
+import { createApplication , createModule, InjectionToken } from 'graphql-modules';
+import "reflect-metadata";
+import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json'
+import { gAuthProviders } from '@autograph.run/provider.google.auth';
+import { gDriveProviderService, gDriveMimeEnums, gDriveStateEnums, listQvals  } from '@autograph.run/model.google.drive'
+import { neo4jAuraProviderService } from '@autograph.run/provider.neo4j.graph';
 
-/**
- *  Off the ne04j based provider service
- */
-@Injectable()
-export class neo4jAuraProviderService extends ne04jClass  {
+export const driveSightlinesModelControllerTypeDefs = gql`
+  type Query {
 
-  async addFolder(node1Name: string, nType: string = 'FOLDER') {
-    const aQ = `MERGE (p1:${nType} { name: $node1Name })
-                RETURN p1`;
-    const writeResult = await this.session.writeTransaction(tx =>
-      tx.run(aQ, { node1Name })
-    )
-    writeResult.records.forEach(record => {
-      const person1Node = record.get('p1')
-      console.log(
-        `Found: ${person1Node.properties.name}`
-      )
-    })
-    return 'ok'
+
+    addMyFolders(count: Int = 50): [String!],
   }
+`;
 
-        // Write transactions allow the driver to handle retries and transient errors
-  constructor() {
-    super();
-    console.log('connected to Ne04j')
+export const driveSightlinesModelControllerResolvers = {
+  Query: {
 
-  }
-}
+    addMyFolders: async ( _: any, { count } : any, { injector }: GraphQLModules.Context ):  Promise<Array<string>>=> {
+
+      const auth =    injector.get(gAuthProviders).auth;  // Get auth
+      const k =  await injector.get(gDriveProviderService).listDrive({ auth, count, q: listQvals.myfolders });  // Get folders from gDrive
+      const add2graph = injector.get(neo4jAuraProviderService).addFolder;
+
+      let proms = [];
+      try {
+        for (const element of k)  {
+          proms.push( add2graph(element) );
+          console.log(`... adding ${element}`)
+        }
+        await Promise.allSettled(proms);
+        return k
+  
+      } catch(e: any) {
+        console.error(`addMyFolders:>>- ERROR - <${e.message}>`)
+        throw new Error(e)
+      }
+    },
+
+  },
+
+} 

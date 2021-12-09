@@ -1,7 +1,6 @@
 require ('graphql-import-node/register'); 
 import "reflect-metadata";
-import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
+
 
 const pack = require('../package.json');
 process.env.AppVersion  = pack.version;
@@ -11,16 +10,18 @@ process.env.name        = pack.name;
 import dotenv from 'dotenv'
 dotenv.config({ path: './config/.env' });
 
+import { writeFileSync } from "fs";
+import express from 'express';
+import { graphqlHTTP } from 'express-graphql';
 import { createApplication, gql, createModule, Module } from 'graphql-modules'
-// import { kRoot } from './src/k-root.TG.typedefs';
+import { printSchema } from "graphql";
 
-// import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
-// import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
 
-// import { gSheetModelModule} from '@autograph.run/model.google.sheets'
 import { googleDriveModelModule } from '@autograph.run/model.google.drive'
 import { googleAuthProviderModule } from '@autograph.run/provider.google.auth'
-import { neo4jAuraProviderService } from './src/driveSightlines.Model.Controller'
+import { neo4jAuraProviderService, neo4jGraphProviderModule } from '@autograph.run/provider.neo4j.graph'
+import { driveSightlinesModelControllerTypeDefs, driveSightlinesModelControllerResolvers } from "src/driveSightlines.Model.Controller";
+
 
 
 var root = {
@@ -47,6 +48,7 @@ const testStubModule = createModule({
       },
       Mutation: {
         addNode: (_: any, {name}: any, {injector}: any) : string  => {
+          const folders = injector.get()
           return injector.get(neo4jAuraProviderService).addFolder(name);
         }
 
@@ -56,13 +58,21 @@ const testStubModule = createModule({
   ],
 });
 
+const sightLineModule = createModule ({
+  id: 'drive.Sightlines.Module',
+  dirname: __dirname,
+  typeDefs: [driveSightlinesModelControllerTypeDefs],
+  resolvers: [driveSightlinesModelControllerResolvers]
+});
+
 const application=   createApplication({
-    modules: [testStubModule, googleAuthProviderModule, googleDriveModelModule ],
-    providers: [neo4jAuraProviderService]
+    modules: [testStubModule, sightLineModule, googleAuthProviderModule, 
+      googleDriveModelModule, neo4jGraphProviderModule],
   });
 
   const customExecuteFn = application.createExecution();
   const schema          = application.schema;
+  writeFileSync('schema.graphql', printSchema(schema));
 
   const server = express();
   server.set('json spaces', 4); 

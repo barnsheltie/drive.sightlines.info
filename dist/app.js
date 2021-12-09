@@ -5,22 +5,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require('graphql-import-node/register');
 require("reflect-metadata");
-const express_1 = __importDefault(require("express"));
-const express_graphql_1 = require("express-graphql");
 const pack = require('../package.json');
 process.env.AppVersion = pack.version;
 process.env.description = pack.description;
 process.env.name = pack.name;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: './config/.env' });
+const fs_1 = require("fs");
+const express_1 = __importDefault(require("express"));
+const express_graphql_1 = require("express-graphql");
 const graphql_modules_1 = require("graphql-modules");
-// import { kRoot } from './src/k-root.TG.typedefs';
-// import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
-// import { kRootResolver } from './src/k-root.TG.resolvers.ts.save';
-// import { gSheetModelModule} from '@autograph.run/model.google.sheets'
+const graphql_1 = require("graphql");
 const model_google_drive_1 = require("@autograph.run/model.google.drive");
 const provider_google_auth_1 = require("@autograph.run/provider.google.auth");
-const driveSightlines_Model_Controller_1 = require("./src/driveSightlines.Model.Controller");
+const provider_neo4j_graph_1 = require("@autograph.run/provider.neo4j.graph");
+const driveSightlines_Model_Controller_1 = require("src/driveSightlines.Model.Controller");
 var root = {
     OYwhoDat: () => "Oy. It's me!"
 };
@@ -43,18 +42,26 @@ const testStubModule = (0, graphql_modules_1.createModule)({
             },
             Mutation: {
                 addNode: (_, { name }, { injector }) => {
-                    return injector.get(driveSightlines_Model_Controller_1.neo4jAuraProviderService).addFolder(name);
+                    const folders = injector.get();
+                    return injector.get(provider_neo4j_graph_1.neo4jAuraProviderService).addFolder(name);
                 }
             },
         }
     ],
 });
+const sightLineModule = (0, graphql_modules_1.createModule)({
+    id: 'drive.Sightlines.Module',
+    dirname: __dirname,
+    typeDefs: [driveSightlines_Model_Controller_1.driveSightlinesModelControllerTypeDefs],
+    resolvers: [driveSightlines_Model_Controller_1.driveSightlinesModelControllerResolvers]
+});
 const application = (0, graphql_modules_1.createApplication)({
-    modules: [testStubModule, provider_google_auth_1.googleAuthProviderModule, model_google_drive_1.googleDriveModelModule],
-    providers: [driveSightlines_Model_Controller_1.neo4jAuraProviderService]
+    modules: [testStubModule, sightLineModule, provider_google_auth_1.googleAuthProviderModule,
+        model_google_drive_1.googleDriveModelModule, provider_neo4j_graph_1.neo4jGraphProviderModule],
 });
 const customExecuteFn = application.createExecution();
 const schema = application.schema;
+(0, fs_1.writeFileSync)('schema.graphql', (0, graphql_1.printSchema)(schema));
 const server = (0, express_1.default)();
 server.set('json spaces', 4);
 server.get(`/`, (_, res) => {
